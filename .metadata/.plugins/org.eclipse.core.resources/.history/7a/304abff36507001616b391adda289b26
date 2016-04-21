@@ -1,0 +1,34 @@
+package toysExcption;
+
+import java.io.*;
+
+public class TestExcption {
+	public static void main(String[] args){
+		System.out.println("异常处理测试");
+		
+		String path = "files/";
+		String filename = "test.txt";
+		
+		File dir = new File(path);
+		if (dir.isDirectory()){
+			if (!dir.exists()){
+				dir.mkdirs();
+			}
+		}
+		
+		File file = new File(path+filename);
+		if (file.exists()){
+			System.out.println("文件存在");
+			System.out.println(file.getName());
+		}
+		else{
+			System.out.println("文件不存在");
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}

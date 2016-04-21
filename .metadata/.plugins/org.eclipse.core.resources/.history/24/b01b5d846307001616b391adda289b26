@@ -1,0 +1,15 @@
+package toysExcption;
+
+import java.io.*;
+
+public class TestExcption {
+	public static void main(String[] args){
+		System.out.println("“Ï≥£¥¶¿Ì≤‚ ‘");
+		
+		String path = "files";
+		String filename = "test.txt";
+		
+		File file = new File(path+filename);
+		
+	}
+}
