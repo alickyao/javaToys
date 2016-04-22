@@ -1,9 +1,0 @@
-package toysExcption;
-
-import java.io.*;
-
-public class TestExcption {
-	public static void main(String[] args){
-		System.out.println("“Ï≥£¥¶¿Ì≤‚ ‘");
-	}
-}

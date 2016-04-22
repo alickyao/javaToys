@@ -1,0 +1,97 @@
+package toysIo;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class TestIo {
+	private final static String path = "files/";
+	public static void main(String[] agrs){
+		
+		try {
+			//readfile1();
+			//write1();
+			//write2();
+			//read2();
+			write3();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("文件未找到");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("文件读写错误");
+		}
+	}
+	
+	//FileInputStream
+	public  static void  readfile1() throws IOException,FileNotFoundException {
+			FileInputStream fileInputStream = new FileInputStream(new File("src/toysIo/TestIo.java"));
+			int c;
+			while ((c = fileInputStream.read()) != -1) {
+				System.out.print((char)c);
+			}
+			fileInputStream.close();
+	}
+	
+	//FileWrite
+	public static void  write1() throws IOException,FileNotFoundException {
+		File pFile = new File(path);
+		if (!pFile.exists()){
+			pFile.mkdirs();
+		}
+		FileWriter fileWriter = new FileWriter(new File(path+"test.txt"));
+		for(int i=0;i<50;i++){
+			fileWriter.write(String.valueOf(i)+" ");
+		}
+		fileWriter.close();
+	}
+	
+	//用缓冲写
+	public  static void write2() throws IOException,FileNotFoundException {
+		FileWriter fileWriter = new FileWriter(new File(path+"test.txt"));
+		BufferedWriter bufferedWriter =  new BufferedWriter(fileWriter);
+		for(int i=0;i<50;i++){
+			bufferedWriter.write(String.valueOf(i));
+			bufferedWriter.newLine();
+		}
+		bufferedWriter.flush();
+		bufferedWriter.close();
+	}
+	
+	//用缓冲读取
+	public static void read2() throws IOException,FileNotFoundException {
+		FileReader fileReader = new FileReader(new File(path+"test.txt"));
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		String lString;
+		while ((lString = bufferedReader.readLine())!= null) {
+			System.out.println(lString);
+		}
+	}
+	//在文件末尾追加一行
+	public  static void  write3() throws IOException,FileNotFoundException {
+		write2();
+		File file = new File(path+"test.txt");
+		//读取
+//		FileReader fileReader = new FileReader(file);
+//		BufferedReader bufferedReader = new BufferedReader(fileReader);
+//		StringBuilder stringBuffer = new StringBuilder();
+//		String lString;
+//		while ((lString = bufferedReader.readLine())!= null) {
+//			System.out.println(lString);
+//			stringBuffer.append(lString);
+//		}
+//		bufferedReader.close();
+		//写入  
+		FileWriter fileWriter = new FileWriter(file,true);//true表示追加
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.newLine();
+		bufferedWriter.write("新的一行");
+		bufferedWriter.flush();
+		
+	}
+}

@@ -14,6 +14,7 @@ public class TestExcption {
 		if (!dir.exists()){
 			System.out.println("文件夹不存在，创建一个文件夹");
 			dir.mkdirs();
+			
 		}
 		else{
 			System.out.println("文件夹已经存在");

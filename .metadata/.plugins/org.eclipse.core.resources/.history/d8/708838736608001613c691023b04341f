@@ -1,0 +1,31 @@
+package toysThred;
+
+import javax.xml.crypto.Data;
+
+public class TestThred {
+
+	/*
+	 * 
+	 * 线程
+	 * 
+	 */
+	public static void main(String[] args) {
+		
+	}
+}
+
+//线程类
+class Run implements Runnable {
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(1000);
+				System.out.println(new Data() {
+				});
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				return;
+			}
+		}
+	}
+}

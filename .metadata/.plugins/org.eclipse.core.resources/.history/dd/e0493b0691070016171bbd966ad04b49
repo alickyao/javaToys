@@ -1,0 +1,150 @@
+package toysCollection;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+/*
+ * 
+ * 容器
+ * ArrayList 类似数组 读的快  改起来慢
+ * LinkedList 读的慢 但是改起来快
+ * Set        上面两者之间
+ */
+public class ToysCollection {
+	public static void main(String[] args){
+		Collection list = new ArrayList();
+		list.add(new Persion("zhangsan", 30));
+		list.add(new Persion("lisi", 35));
+		
+		
+		//增强的for循环
+		for(Object cObject : list){
+			System.out.println(cObject);//这里会JAVA会执行Persion对象的重写的toString()方法，多态的提现
+		}
+		//使用Iterator来进行循环
+		Iterator iterator = list.iterator();
+		while (iterator.hasNext()) {
+			//iterator.hasNext() 判断是否还有下一行
+			//如何获取元素，循环一开始游标指向第一元素的左边;
+			Persion persion =(Persion)iterator.next();//获取下一个元素
+			System.out.println(persion.name);
+			if (persion.equals(new Persion("zhangsan", 30)));
+			iterator.remove();//可以移除
+		}
+		//增强的for循环
+		for(Object cObject : list){
+			System.out.println(cObject);//这里会JAVA会执行Persion对象的重写的toString()方法，多态的提现
+		}
+		
+		//HashSet，hashSet是没有顺序的，不可重复的（是否重复需要对象重写equals()方法）
+		//还有一个 TreeSet 
+		Set s1 = new HashSet();
+		s1.add(new Persion("李小璐", 20));
+		s1.add(new Persion("王小二", 30));
+		s1.add(new Persion("李小璐", 25));//HashSet还是调用的对象的equals()方法
+		s1.add(new Persion("王小二", 30));//对象equals方法返回为true的不能进入HashSet，这是 HashSet和arrlist的区别
+		for (Object object : s1) {
+			System.out.println(object.toString());
+		}
+		
+		//对List ArrayList 和 LinkedList 容器的一系列操作
+		List list1 = new LinkedList();
+		
+		list1.add(new Persion("王小花", 40));
+		list1.add(new Persion("范晓旭", 20));
+		list1.add(new Persion("范wang旭", 35));
+		list1.add(new Persion("林语堂", 40));
+		System.out.println(list1);
+		Object p1 = list1.get(list1.indexOf(new Persion("林语堂", 40)));//获取某个元素
+		Object p2 = list1.set(0, new Persion("小花", 50));
+		System.out.println(p1);
+		Collections.shuffle(list1);//随机排列
+		Collections.sort(list1);//排序，需要对象实现Comparable接口，重写compareTo方法
+		int s = Collections.binarySearch(list1,new Persion("a", 40));//折半查找，先要排序，正序然后才能用，不怎么好用（*如果里面排序依据都一样，那折半就用不了应为他也不知道中间在哪里）
+		Collections.reverse(list1);//逆序
+		
+		System.out.println(s);
+		System.out.println(list1);
+		
+	}
+}
+
+class Persion implements Comparable{//让Persion类实现能够比较的接口 用于排序Collections.sort
+	String name;
+	int age;
+	
+	Persion(String n,int a) {
+		// TODO Auto-generated constructor stub
+		this.name = n;
+		this.age=a;
+	}
+	
+	//重写的toString()方法
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.name+this.age;
+	}
+	
+	//重写的比较,比如这里年龄小的在前面
+	//可以用于排序
+	// -1 小于 0 等于 1大于
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		int i = 0;
+		if (o instanceof Persion){
+			Persion persion = (Persion)o;
+			if (persion.age<this.age){
+				i=1;
+			}
+			else if (persion.age>this.age){
+				i=-1;
+			}
+		}
+		return i;
+	}
+	
+	/*
+	 * 
+	 * 用于比较两个对象是否相等
+	 * 在Object类中定义的equals 是用的==符号计算两个元素是否相等，除了基础类型和String外即便两个对象的值相等也会返回false
+	 * 所以需要重写 equals 方法
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	
+	//重写的equals
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if (obj instanceof Persion){
+			Persion persion = (Persion)obj;
+			if (this.name.equals(persion.name) && this.age == persion.age){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		return super.equals(obj);//这是交给父级处理
+		
+	}
+	//重写的hash
+	/*
+	 * 当前对象作为hashmap时，系统会采用hashCode()方法的返回值来判断两个对象是否相等
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.name.hashCode();
+	}
+
+	
+}
